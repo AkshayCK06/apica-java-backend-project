@@ -1,0 +1,72 @@
+This file documents the available REST API endpoints for the User Management Service and the Journal Service.
+
+User Management Service
+Base URL: http://localhost:8081/users
+
+Endpoints
+1. Get all users
+GET /users
+Authorization: Role ADMIN
+Response: List of users
+
+2. Get user by ID
+GET /users/{id}
+Authorization: Role ADMIN or the user himself
+Response: Single user object
+
+3. Create a new user
+POST /users
+Authorization: Role ADMIN
+Request Body:
+{
+  "username": "string",
+  "email": "string",
+  "role": "ADMIN | USER"
+}
+
+Response: Created user object
+
+4. Update a user
+PUT /users/{id}
+Authorization: Role ADMIN
+Request Body: Same as create
+Response: Updated user object
+
+5. Delete a user
+DELETE /users/{id}
+Authorization: Role ADMIN
+Response: 204 No Content
+
+
+---------------------------------------------------------------------------------------------------
+
+Kafka Event Publishing
+Topic: user-events
+Publishes events on user creation, update, and deletion
+
+---------------------------------------------------------------------------------------------------
+
+Journal Service
+Base URL: http://localhost:8082/journal
+
+Endpoints
+1. Get all journaled events
+GET /journal
+Authorization: Role ADMIN
+Response: List of events
+
+2. Get journal events by user ID
+GET /journal/user/{userId}
+Authorization: Role ADMIN
+Response: Filtered event list for the given user
+
+Kafka Event Consumption
+Topic: user-events
+Automatically consumes and logs user events
+
+
+-------------------------------------------------------------------------------
+Notes:
+All APIs return JSON responses.
+Spring Security handles authentication and role-based access.
+APIs are tested using MockMvc and JUnit.
