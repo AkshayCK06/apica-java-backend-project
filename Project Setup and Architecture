@@ -1,0 +1,97 @@
+This document explains the Prerequisites, how to run, test, and interact with the User Management and Journal microservices locally and outlines the architecture decisions taken and what has been implemented.
+
+--Prerequisites:
+Java 17+
+Maven 3.6+
+Docker & Docker Compose
+Running the Project Locally
+
+Step 1: Clone the Repository
+git clone https://github.com/your-repo-url
+cd your-repo
+
+Step 2: Run Docker Compose (for dependencies)
+docker-compose up -d
+
+This will spin up:
+Kafka
+Zookeeper
+H2 (used in-memory for both the microservices)
+
+Step 3: Run Microservices
+Each service can be run individually from their respective directories:
+
+User Management Service:
+cd user-management
+mvn spring-boot:run
+
+Journal Service:
+cd journal-service
+mvn spring-boot:run
+
+--Testing the Application
+
+Unit Tests:
+Run the following for each service:
+mvn test
+
+Manual API Testing:
+Use tools like Postman or cURL to hit REST APIs as described in the api_endpoints_readme.
+
+
+Architecture Overview:
+
+- Microservices: 
+    User Management Service: Manages user entities, handles authentication and role-based authorization. Publishes user-related events to Kafka.
+    Journal Service: Listens to Kafka events, logs and persists them. Provides REST API access to journaled events.
+
+- Security:
+  Implemented via Spring Security.
+  Role-based access control.
+
+- Communication:
+  Kafka used for asynchronous communication between services.
+
+- Database:
+  H2 (in-memory) for Microservices (can be replaced with MySQL/PostgreSQL)
+
+
+What Has Been Implemented:
+
+1. User Management Service
+ - User registration and CRUD operations
+ - Role-based access control using Spring Security
+ - Kafka producer to publish events to user-events topic
+ - Unit and integration tests for controller and service layers
+
+2. Journal Service
+ - Kafka consumer listening to user-events
+ - Event logging and persistence in PostgreSQL
+ - REST APIs to fetch journaled events
+ - Role-based access control
+ - Unit and integration testing
+
+
+-Folder Structure: 
+root/
+│
+├── user-management/       # User microservice
+│   └── src/
+│
+├── journal-service/       # Journal microservice
+│   └── src/
+│
+├── docker-compose.yml     # Kafka + Zookeeper
+└── README.md
+
+Future Improvements:
+Add Swagger/OpenAPI documentation
+Replace H2 with persistent database(Mysql DB migration ready)
+Add user authentication with JWT
+
+Assumptions made:
+1. In-memory H2 Database is used for the User Management service to simplify local development and testing. In production, it is expected to be replaced with a persistent store like MySQL or PostgreSQL.
+2. Kafka is assumed to be available via Docker Compose locally. The services rely on Kafka being up for event publishing and consumption.
+3. User roles are hardcoded/enumerated (ADMIN, USER) and not stored in a separate role table or fetched dynamically.
+4. Security is simulated using Spring Security annotations and @WithMockUser in tests. Full authentication (e.g., JWT, OAuth2) is not implemented.
+5. The database schema is auto-generated using JPA/Hibernate. No explicit schema migration tool like Flyway is used.
