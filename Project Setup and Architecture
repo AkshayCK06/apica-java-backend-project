@@ -7,7 +7,7 @@ Docker & Docker Compose
 Running the Project Locally
 
 Step 1: Clone the Repository
-git clone https://github.com/your-repo-url
+git clone https://github.com/AkshayCK06/apica-java-backend-project.git
 cd your-repo
 
 Step 2: Run Docker Compose (for dependencies)
@@ -83,6 +83,9 @@ root/
 │
 ├── docker-compose.yml     # Kafka + Zookeeper
 └── README.md
+└── REST API Endpoints Documentation        # Document for api endpoints 
+└── Project Setup and Architecture          # Document for the project setup, the architecture and more info
+
 
 Future Improvements:
 Add Swagger/OpenAPI documentation
