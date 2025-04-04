@@ -9,6 +9,10 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 public class User {
+    public User(Object object, String string, String string2, Role user) {
+        //TODO Auto-generated constructor stub
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

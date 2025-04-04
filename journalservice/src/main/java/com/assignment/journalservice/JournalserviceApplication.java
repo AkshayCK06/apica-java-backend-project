@@ -1,15 +1,13 @@
-
-
-package com.assignment.usermanagement;
+package com.assignment.journalservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UsermanagementApplication {
+public class JournalserviceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UsermanagementApplication.class, args);
+		SpringApplication.run(JournalserviceApplication.class, args);
 	}
 
 }

@@ -20,8 +20,7 @@ class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/**").authenticated()
-                        .anyRequest().permitAll())
+                        .requestMatchers("/users/**").permitAll())
                         .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
